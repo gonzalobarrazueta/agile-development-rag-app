@@ -2,13 +2,13 @@ from azure_open_ai import get_embedding, get_completions
 from azure_ai_search import get_matching_documents
 
 
-def user_question(question):
+def embed_text(question):
     return get_embedding(question)
 
 
 def get_sources(question):
 
-    question_embedding = user_question(question)
+    question_embedding = embed_text(question)
     sources = get_matching_documents(question, question_embedding)
 
     return sources
