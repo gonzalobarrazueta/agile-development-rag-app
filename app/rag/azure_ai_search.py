@@ -23,6 +23,7 @@ AZURE_SEARCH_SERVICE = os.getenv("AZURE_SEARCH_SERVICE")
 AZURE_SEARCH_ENDPOINT = f"https://{AZURE_SEARCH_SERVICE}.search.windows.net"
 AZURE_SEARCH_API_KEY = os.getenv("AZURE_SEARCH_API_KEY")
 AZURE_SEARCH_INDEX = os.getenv("AZURE_SEARCH_INDEX")
+DOCUMENTS_RETRIEVED = os.getenv("DOCUMENTS_RETRIEVED")
 
 azure_credential = AzureKeyCredential(AZURE_SEARCH_API_KEY)
 
@@ -62,7 +63,7 @@ def get_matching_documents(question, question_vector):
     search_client = get_search_index(AZURE_SEARCH_INDEX)
     results = search_client.search(
         question,
-        top=2,
+        top=DOCUMENTS_RETRIEVED,
         vector_queries=[
             VectorizedQuery(vector=question_vector, k_nearest_neighbors=2, fields="text_vector")
         ]
