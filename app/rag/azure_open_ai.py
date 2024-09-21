@@ -23,7 +23,7 @@ def get_openai_client():
     return openai_client
 
 
-def get_embedding(text="this is a text to embed. only for testing"):
+def get_embedding(text):
 
     openai_client = get_openai_client()
 
