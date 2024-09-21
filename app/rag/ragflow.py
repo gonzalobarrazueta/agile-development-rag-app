@@ -19,9 +19,10 @@ def set_system_message(system_message):
 
 
 def chat(system_message, user_question):
-    SYSTEM_MESSAGE = system_message
-    USER_MESSAGE = user_question + "\nSources: " + get_sources(user_question)
 
-    response = get_completions(SYSTEM_MESSAGE, USER_MESSAGE)
+    sources = get_sources(user_question)
+    user_message = user_question + "\nSources: " + sources
 
-    return response
+    response = get_completions(system_message, user_message)
+
+    return sources, response

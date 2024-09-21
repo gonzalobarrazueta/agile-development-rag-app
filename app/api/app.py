@@ -18,8 +18,11 @@ def generate_response():
     system_message = data['system_message']
     user_message = data['user_message']
 
-    response = {
-        "response": chat(system_message, user_message)
+    sources, response = chat(system_message, user_message)
+
+    chat_response = {
+        "sources": sources,
+        "response": response
     }
 
-    return jsonify(response)
+    return jsonify(chat_response)
