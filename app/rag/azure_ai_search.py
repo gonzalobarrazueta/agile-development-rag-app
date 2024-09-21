@@ -6,6 +6,7 @@ from azure.core.credentials import AzureKeyCredential
 from azure.core.exceptions import ResourceNotFoundError
 from azure.search.documents.models import VectorizedQuery
 from azure.search.documents import SearchClient
+from app.utils.documents import clean_document
 
 from azure.search.documents.indexes.models import (
     HnswAlgorithmConfiguration,
@@ -57,3 +58,17 @@ def get_search_index(index_name=AZURE_SEARCH_INDEX):
 
     return SearchClient(endpoint=AZURE_SEARCH_ENDPOINT, index_name=index_name, credential=azure_credential)
 
+
+def get_matching_documents(question, question_vector):
+    search_client = get_search_index(AZURE_SEARCH_INDEX)
+    results = search_client.search(
+        question,
+        top=2,
+        vector_queries=[
+            VectorizedQuery(vector=question_vector, k_nearest_neighbors=2, fields="text_vector")
+        ]
+    )
+
+    sources = "\n\n".join([f"[Documento {index}]: {clean_document(doc['chunk'])}\n" for index, doc in enumerate(results)])
+
+    return sources
