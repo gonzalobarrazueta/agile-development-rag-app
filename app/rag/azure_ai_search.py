@@ -4,6 +4,8 @@ import dotenv
 from azure.search.documents.indexes import SearchIndexClient
 from azure.core.credentials import AzureKeyCredential
 from azure.core.exceptions import ResourceNotFoundError
+from azure.search.documents.models import VectorizedQuery
+from azure.search.documents import SearchClient
 
 from azure.search.documents.indexes.models import (
     HnswAlgorithmConfiguration,
@@ -53,10 +55,5 @@ def create_index():
 
 def get_search_index(index_name=AZURE_SEARCH_INDEX):
 
-    return SearchIndexClient(endpoint=AZURE_SEARCH_ENDPOINT, index_name=index_name, credential=azure_credential)
+    return SearchClient(endpoint=AZURE_SEARCH_ENDPOINT, index_name=index_name, credential=azure_credential)
 
-
-try:
-    index = get_search_index()
-except ResourceNotFoundError:
-    print("Index not found")
