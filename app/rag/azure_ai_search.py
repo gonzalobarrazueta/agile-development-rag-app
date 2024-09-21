@@ -16,22 +16,24 @@ from azure.search.documents.indexes.models import (
 
 dotenv.load_dotenv()
 
+AZURE_SEARCH_SERVICE = os.getenv("AZURE_SEARCH_SERVICE")
+AZURE_SEARCH_ENDPOINT = f"https://{AZURE_SEARCH_SERVICE}.search.windows.net"
+AZURE_SEARCH_API_KEY = os.getenv("AZURE_SEARCH_API_KEY")
+AZURE_SEARCH_INDEX = os.getenv("AZURE_SEARCH_INDEX")
+
+AZURE_OPENAI_SERVICE = os.getenv("AZURE_OPENAI_SERVICE")
+AZURE_OPENAI_ADA_DEPLOYMENT = os.getenv("AZURE_OPENAI_ADA_DEPLOYMENT")
+
+azure_credential = AzureKeyCredential(AZURE_SEARCH_API_KEY)
 
 def get_azure_search_client():
 
-    AZURE_SEARCH_SERVICE = os.getenv("AZURE_SEARCH_SERVICE")
-    AZURE_SEARCH_ENDPOINT = f"https://{AZURE_SEARCH_SERVICE}.search.windows.net"
-    AZURE_SEARCH_API_KEY = os.getenv("AZURE_SEARCH_API_KEY")
-
-    index_client = SearchIndexClient(endpoint=AZURE_SEARCH_ENDPOINT, credential=AzureKeyCredential(AZURE_SEARCH_API_KEY))
-
-    return index_client
+    return SearchIndexClient(endpoint=AZURE_SEARCH_ENDPOINT, credential=azure_credential)
 
 
 def create_index():
 
     index_client = get_azure_search_client()
-    AZURE_SEARCH_INDEX = os.getenv("AZURE_SEARCH_INDEX")
 
     index = SearchIndex(
         name=AZURE_SEARCH_INDEX,
@@ -48,5 +50,6 @@ def create_index():
     )
 
     index_client.create_index(index)
+
 
 create_index()
