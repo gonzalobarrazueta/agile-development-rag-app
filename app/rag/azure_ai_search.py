@@ -3,7 +3,6 @@ import os
 import dotenv
 from azure.search.documents.indexes import SearchIndexClient
 from azure.core.credentials import AzureKeyCredential
-from azure.core.exceptions import ResourceNotFoundError
 from azure.search.documents.models import VectorizedQuery
 from azure.search.documents import SearchClient
 from app.utils.documents import clean_document
@@ -69,6 +68,6 @@ def get_matching_documents(question, question_vector):
         ]
     )
 
-    sources = "\n\n".join([f"[Documento {index}]: {clean_document(doc['chunk'])}\n" for index, doc in enumerate(results)])
+    sources = "\n\n".join([f"[Documento {index + 1}]: {clean_document(doc['chunk'])}\n" for index, doc in enumerate(results)])
 
     return sources
