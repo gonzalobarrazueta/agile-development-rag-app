@@ -1,5 +1,5 @@
-from azure_open_ai import get_embedding, get_completions
-from azure_ai_search import get_matching_documents
+from app.rag.azure_open_ai import get_embedding, get_completions
+from app.rag.azure_ai_search import get_matching_documents
 
 
 def embed_text(question):
