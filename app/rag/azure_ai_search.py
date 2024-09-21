@@ -21,10 +21,8 @@ AZURE_SEARCH_ENDPOINT = f"https://{AZURE_SEARCH_SERVICE}.search.windows.net"
 AZURE_SEARCH_API_KEY = os.getenv("AZURE_SEARCH_API_KEY")
 AZURE_SEARCH_INDEX = os.getenv("AZURE_SEARCH_INDEX")
 
-AZURE_OPENAI_SERVICE = os.getenv("AZURE_OPENAI_SERVICE")
-AZURE_OPENAI_ADA_DEPLOYMENT = os.getenv("AZURE_OPENAI_ADA_DEPLOYMENT")
-
 azure_credential = AzureKeyCredential(AZURE_SEARCH_API_KEY)
+
 
 def get_azure_search_client():
 
